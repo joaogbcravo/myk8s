@@ -1,0 +1,30 @@
+dependencies:
+- name: coredns
+  version: "1.2.*"
+  repository: "@stable"
+  condition: installAllCharts,enabledCharts.coredns
+
+- name: docker-registry
+  version: "1.7.*"
+  repository: "@stable"
+  condition: installAllCharts,enabledCharts.docker-registry
+
+- name: kubernetes-dashboard
+  version: "1.2.*"
+  repository: "@stable"
+  condition: installAllCharts,enabledCharts.kubernetes-dashboard
+
+- name: jenkins
+  version: "0.33.*"
+  repository: "@stable"
+  condition: installAllCharts,enabledCharts.jenkins
+
+- name: nginx-ingress
+  version: "1.3.*"
+  repository: "@stable"
+  condition: installAllCharts,enabledCharts.nginx-ingress
+
+- name: prometheus-operator
+  version: "4.1.0"
+  repository: "@stable"
+  condition: installAllCharts,enabledCharts.prometheus-operator

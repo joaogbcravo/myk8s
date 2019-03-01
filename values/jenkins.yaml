@@ -1,0 +1,20 @@
+
+Master:
+  HostName: jenkins.myk8s
+  Sidecars:
+    configAutoReload:
+
+      enabled: true
+
+  SecurityRealm: |-
+    <securityRealm class="hudson.security.SecurityRealm$None"/>
+  AuthorizationStrategy: |-
+    <authorizationStrategy class="hudson.security.AuthorizationStrategy$Unsecured"/>
+
+  InstallPlugins:
+    - kubernetes:1.14.6
+    - workflow-job:2.31
+    - workflow-aggregator:2.6
+    - credentials-binding:1.18
+    - git:3.9.3
+    - greenballs:1.15

@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+MYK8S_CHART_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
+
+chart_dir="${MYK8S_CHART_DIR}/charts"
+
+for chart_zip in $(ls -1 ${chart_dir}); do
+  chart_name="${chart_zip%-*}"
+  helm delete --purge ${chart_name}
+done
+
+helm delete --purge myk8s
+
+kubectl delete crd prometheuses.monitoring.coreos.com
+kubectl delete crd prometheusrules.monitoring.coreos.com
+kubectl delete crd servicemonitors.monitoring.coreos.com
+kubectl delete crd alertmanagers.monitoring.coreos.com

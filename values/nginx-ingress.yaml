@@ -1,0 +1,10 @@
+
+controller:
+  service:
+    externalTrafficPolicy: Local
+  metrics:
+    enabled: true
+  stats:
+    enabled: true
+  serviceMonitor:
+    enabled: true

@@ -1,0 +1,23 @@
+# Default values for myk8s.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+domain: myk8s
+
+externalDns:
+  nodePort: 32000
+
+# Enable instalation of subcharts as part of the myk8s chart depedencies
+#   if true: install all dependencies ignoring 'enabledCharts' conditions
+#   if false: do not install any dependency, ignoring 'enabledCharts'
+#   if null: install the subchart only if the respective 'enabledCharts' flag is enabled
+installAllCharts: null
+
+# Disable any chart if you wish
+enabledCharts:
+  coredns: true
+  docker-registry: true
+  jenkins: true
+  kubernetes-dashboard: true
+  nginx-ingress: true
+  prometheus-operator: true

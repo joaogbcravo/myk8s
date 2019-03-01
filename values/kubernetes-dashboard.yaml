@@ -1,0 +1,6 @@
+
+enableInsecureLogin: true
+enableSkipLogin: true
+ingress:
+  enabled: true
+  hosts: [ dashboard.myk8s ]

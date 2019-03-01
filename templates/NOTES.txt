@@ -1,0 +1,8 @@
+
+You have now a DNS service (coredns) that is resolving the '{{ .Values.domain }}' domain and exposed on port {{ .Values.externalDns.nodePort }} of your host.
+
+To be able to your host resolve {{ .Values.domain }} you need to let him know about this new DNS server.
+
+A easy way to do it is:
+
+sudo bash -c 'echo -e "nameserver 127.0.0.1\nport {{ .Values.externalDns.nodePort }}" > /etc/resolver/{{ .Values.domain }}'

@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+set -e
+
+HELM_SETUP=${HELM_SETUP:-"true"}
+
+myk8s_chart_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
+
+namespace="ops"
+charts_dir="${myk8s_chart_dir}/charts"
+
+if [[ "${HELM_SETUP}" == "true" ]]; then
+  helm init --wait
+  helm dependency update ${myk8s_chart_dir}
+fi
+
+enabled_charts=$( \
+  python -c 'import sys, yaml; print(yaml.dump(yaml.load(sys.stdin)["enabledCharts"], default_flow_style=False))' \
+  < values.yaml \
+)
+
+for chart_zip in $(ls -1 ${charts_dir}); do
+  chart_path="${charts_dir}/$chart_zip"
+  chart_name="${chart_zip%-*}"
+
+  chart_enabled=$(echo -e "${enabled_charts}" | grep "${chart_name}" | awk '{print $2}')
+  [[ "${chart_enabled}" == "false" ]] && echo "Skipping ${chart_name}" && continue
+
+  helm upgrade --install "${chart_name}" "${chart_path}" \
+    --namespace "${namespace}" \
+    --values "${myk8s_chart_dir}/values/${chart_name}.yaml"
+done
+
+echo
+helm upgrade --install myk8s "${myk8s_chart_dir}" \
+    --namespace "${namespace}" \
+    --set installAllCharts=false
